@@ -3,8 +3,10 @@
 Just put these files in your path! To make a `tasky` command, do the
 following:
 
-    ln -s tasky.py tasky
-    chmod +x tasky
+~~~~shell
+ln -s tasky.py tasky
+chmod +x tasky
+~~~~
 
 ## Tasky: a modal, interactive Taskwarrior client
 
@@ -49,6 +51,9 @@ filter is displayed in the header.
 
 To clear the filter, simply type `f` and hit return without entering any
 text.
+
+**If you run Tasky with arguments, those will be used as the initial
+filter.**
 
 ### Editing and Inserting
 
