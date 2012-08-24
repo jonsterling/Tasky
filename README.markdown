@@ -3,8 +3,9 @@
 Just put these files in your path! To make a `tasky` command, do the
 following:
 
-~~~~shell
+~~~~sh
 ln -s tasky.py tasky
+chmod +x tasknote
 chmod +x tasky
 ~~~~
 
