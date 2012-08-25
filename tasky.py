@@ -33,7 +33,7 @@ class TaskWarrior:
         Utility.run_command('task add ' + value)
 
     def mod(self, task, value):
-        Utility.run_command('task %s mod %s' % task['uuid'] % value)
+        Utility.run_command('task %s mod %s' % (task['uuid'], value))
 
     def undo(self):
         Utility.run_command('task rc.confirmation:no undo')
