@@ -7,7 +7,14 @@ import subprocess
 import datetime
 import sys
 
-class TaskWarrior(object):
+class Utility:
+
+    @staticmethod
+    def run_command(args):
+        subprocess.Popen(args, stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE, shell=True).communicate()
+
+class TaskWarrior:
 
     def pending_tasks(self, args=''):
         raw_output = subprocess.check_output(['task', 'export',
@@ -17,19 +24,19 @@ class TaskWarrior(object):
         return json.loads(task_json, strict=False)
 
     def complete(self, task):
-        subprocess.call(['task', task['uuid'], 'done'])
+        Utility.run_command('task %s done' % task['uuid'])
 
     def delete(self, task):
-        subprocess.call(['task', task['uuid'], 'rc.confirmation:no', 'del'])
+        Utility.run_command('task %s rc.confirmation:no del' % task['uuid'])
 
     def add(self, value):
-        subprocess.call(['task', 'add', value])
+        Utility.run_command('task add ' + value)
 
     def mod(self, task, value):
-        subprocess.call(['task', task['uuid'], 'mod', value])
+        Utility.run_command('task %s mod %s' % task['uuid'] % value)
 
     def undo(self):
-        subprocess.call(['task', 'rc.confirmation:no', 'undo'])
+        Utility.run_command('task rc.confirmation:no undo')
 
 
 class TaskWidget (urwid.WidgetWrap):
@@ -210,7 +217,7 @@ class Tasky(object):
 
 
     def task_note(self, task):
-        subprocess.call("tmux split-window 'tasknote %i'" % task['id'], shell=True)
+        Utility.run_command("tmux split-window 'tasknote %i'" % task['id'])
 
     def present_editor(self, prompt, text, handler):
         self.foot = LineEditor(prompt, text)
@@ -258,12 +265,12 @@ class Tasky(object):
 
     @dismiss_editor
     def command_done(self, content):
-        subprocess.call("task %s" % content)
+        Utility.run_command('task ' + content)
         self.refresh()
 
     @dismiss_editor
     def shell_done(self, content):
-        subprocess.call("tmux split-window '%s'" % content, shell=True)
+        Utility.run_command("tmux split-window '%s'" % content)
 
     @dismiss_editor
     def filter_done(self, content):
