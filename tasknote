@@ -38,7 +38,7 @@ TASKBIN=task
 # If you sync tasks FOLDER should be a location that syncs and is available to
 # other computers, i.e. /users/dropbox/tasknotes
 # FOLDER to store notes in, must already exist!
-FOLDER="~/.tasknote/"
+FOLDER="/Users/jon/.tasknote/"
 
 # Preferred extension for tasknotes
 EXT=".markdown"
