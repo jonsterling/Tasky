@@ -232,7 +232,8 @@ class Tasky(object):
         self.present_editor('! ', '', self.shell_done)
 
     def change_filter(self):
-        self.present_editor('task export ', '', self.filter_done)
+        filter = self.filter or ''
+        self.present_editor('task export ', filter, self.filter_done)
 
     def edit_task(self, task):
         self.edited_task = task

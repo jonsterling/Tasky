@@ -50,9 +50,6 @@ the `task export` command. So, a valid filter would be something like
 `proj:tasky` or `due:today` or `due:tomorrow +important`. The current
 filter is displayed in the header.
 
-To clear the filter, simply type `f` and hit return without entering any
-text.
-
 **If you run Tasky with arguments, those will be used as the initial
 filter.**
 
