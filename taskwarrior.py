@@ -20,6 +20,12 @@ class Task:
     def project(self):
         return self.data.get('project', '')
 
+    def uuid(self):
+        return self.data['uuid']
+
+    def id(self):
+        return self.data['id']
+
     def due_today(self):
         return self.due_date() == datetime.datetime.today().date()
 
@@ -51,16 +57,16 @@ class TaskWarrior:
         return [Task(task) for task in json.loads(task_json, strict=False)]
 
     def complete(self, task):
-        Utility.run_command('task %s done' % task['uuid'])
+        Utility.run_command('task %s done' % task.uuid())
 
     def delete(self, task):
-        Utility.run_command('task %s rc.confirmation:no del' % task['uuid'])
+        Utility.run_command('task %s rc.confirmation:no del' % task.uuid())
 
     def add(self, value):
         Utility.run_command('task add ' + value)
 
     def mod(self, task, value):
-        Utility.run_command('task %s mod %s' % (task['uuid'], value))
+        Utility.run_command('task %s mod %s' % (task.uuid(), value))
 
     def undo(self):
         Utility.run_command('task rc.confirmation:no undo')
