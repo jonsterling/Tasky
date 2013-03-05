@@ -33,26 +33,31 @@ class Task:
     def id(self):
         return self.data['id']
 
-    def due_today(self):
-        return self.due_date() == datetime.datetime.today().date()
-
     def due_date(self):
-        if 'due' in self.data:
-            return datetime.datetime.strptime(self.data['due'][:8],
+        return self.parse_date_at_key('due')
+
+    def start_date(self):
+        return self.parse_date_at_key('start')
+
+    def is_started(self):
+        return self.start_date() is not None
+
+    def due_date_string(self):
+        return Task.show_date(self.due_date())
+
+    def parse_date_at_key(self, key):
+        if key in self.data:
+            return datetime.datetime.strptime(self.data[key][:8],
                     "%Y%m%d").date()
         return None
 
-    def due_date_string(self):
-        if self.due_today():
-            return 'today'
-
-        date = self.due_date()
+    @staticmethod
+    def show_date(date):
         if date:
+            if date == datetime.datetime.today().date():
+                return 'today'
             return date.strftime("%m/%d")
-
         return ''
-
-
 
 class TaskWarrior:
 
@@ -74,6 +79,18 @@ class TaskWarrior:
 
     def mod(self, task, value):
         Utility.run_command('task %s mod %s' % (task.uuid(), value))
+
+    def start(self, task):
+        Utility.run_command('task %s start' % task.uuid())
+
+    def stop(self, task):
+        Utility.run_command('task %s stop' % task.uuid())
+
+    def toggle_active(self, task):
+        if task.is_started():
+            self.stop(task)
+        else:
+            self.start(task)
 
     def undo(self):
         Utility.run_command('task rc.confirmation:no undo')

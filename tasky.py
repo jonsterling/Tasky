@@ -17,6 +17,8 @@ class Tasky(object):
         ('proj_focus', '', '', '', 'dark gray', 'dark green'),
         ('body','', '', '', 'dark blue', ''),
         ('body_focus', '', '', '', 'dark gray', 'dark cyan'),
+        ('body_emph','', '', '', 'light red', ''),
+        ('body_emph_focus', '', '', '', 'dark gray', 'dark magenta'),
         ('head', '', '', '',  'light red', 'black'),
         ('dim', '', '', '', 'g54', 'black')
     ]
@@ -74,6 +76,7 @@ class Tasky(object):
             'n': (self.task_note, False),
             'c': (self.warrior.complete, True),
             'd': (self.warrior.delete, True),
+            ' ': (self.warrior.toggle_active, True)
         }
 
         if input in view_action_map:

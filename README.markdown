@@ -25,16 +25,18 @@ following:
 
 5. `d`: delete the selected task. No confirmation.
 
-6. `u`: undo whatever you did last. No confirmation.
+6. `SPACE`: toggle (start/stop) the selected task. No confirmation.
 
-7. `:`: enter **command mode**. Basically, enter any arbitrary
+7. `u`: undo whatever you did last. No confirmation.
+
+8. `:`: enter **command mode**. Basically, enter any arbitrary
    Taskwarrior commands (without `task`). Example: `proj:tasky del`.
 
-8. `!`: enter **shell mode**. Run any arbitrary shell command.
+9. `!`: enter **shell mode**. Run any arbitrary shell command.
 
-9. `l`: change the current filter (see below).
+10. `l`: change the current filter (see below).
 
-10. `n`: runs `tasknote` for a given task in a new `tmux` pane. Since I
+11. `n`: runs `tasknote` for a given task in a new `tmux` pane. Since I
     built Tasky for myself, this command requires you to be in a `tmux`
     session. I plan to make this configurable later.
 
