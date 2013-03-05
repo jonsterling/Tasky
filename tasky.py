@@ -25,7 +25,7 @@ class Tasky(object):
 
         self.warrior = TaskWarrior()
 
-        self.filter = ''.join(sys.argv[1:])
+        self.limit = ''.join(sys.argv[1:])
 
         header = urwid.AttrMap(urwid.Text('tasky.α'), 'head')
         self.walker = urwid.SimpleListWalker([])
@@ -34,8 +34,8 @@ class Tasky(object):
         self.refresh()
 
         def update_header():
-            filter = ' | ' + self.filter if self.filter else ''
-            header_text = ['tasky.α', ('dim', filter)]
+            limit = ' | ' + self.limit if self.limit else ''
+            header_text = ['tasky.α', ('dim', limit)]
             self.view.set_header(urwid.AttrMap(urwid.Text(header_text), 'head'))
 
         update_header()
@@ -46,8 +46,8 @@ class Tasky(object):
         loop.run()
 
     def refresh(self):
-        filter = self.filter or ''
-        self.walker[:] = map(TaskWidget, self.warrior.pending_tasks(filter))
+        limit = self.limit or ''
+        self.walker[:] = map(TaskWidget, self.warrior.pending_tasks(limit))
 
     def keystroke(self, input):
         def exit():
@@ -65,7 +65,7 @@ class Tasky(object):
             'i': self.new_task,
             ':': self.command_mode,
             '!': self.shell_mode,
-            'f': self.change_filter
+            'l': self.change_limit
         }
 
         task_action_map = {
@@ -90,7 +90,7 @@ class Tasky(object):
 
 
     def task_note(self, task):
-        Utility.run_command("tmux split-window 'tasknote %i'" % task['id'])
+        Utility.run_command("tmux split-window 'tasknote %i'" % task.id())
 
     def present_editor(self, prompt, text, handler):
         self.foot = LineEditor(prompt, text)
@@ -104,13 +104,13 @@ class Tasky(object):
     def shell_mode(self):
         self.present_editor('! ', '', self.shell_done)
 
-    def change_filter(self):
-        filter = self.filter or ''
-        self.present_editor('task export ', filter, self.filter_done)
+    def change_limit(self):
+        limit = self.limit or ''
+        self.present_editor('Limit: ', limit, self.limit_done)
 
     def edit_task(self, task):
         self.edited_task = task
-        self.present_editor(' >> ', task['description'], self.edit_done)
+        self.present_editor(' >> ', task.description(), self.edit_done)
 
     def new_task(self):
         self.present_editor(' >> ', '', self.new_done)
@@ -133,8 +133,8 @@ class Tasky(object):
 
     @dismiss_editor
     def new_done(self, content):
-        filter = self.filter or ''
-        self.warrior.add(content + ' ' + filter)
+        limit = self.limit or ''
+        self.warrior.add(content + ' ' + limit)
         self.refresh()
 
     @dismiss_editor
@@ -147,8 +147,8 @@ class Tasky(object):
         Utility.run_command("tmux split-window '%s'" % content)
 
     @dismiss_editor
-    def filter_done(self, content):
-        self.filter = content
+    def limit_done(self, content):
+        self.limit = content
         self.refresh()
 
 
