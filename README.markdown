@@ -32,7 +32,7 @@ following:
 
 8. `!`: enter **shell mode**. Run any arbitrary shell command.
 
-9. `f`: change the current filter (see below).
+9. `l`: change the current filter (see below).
 
 10. `n`: runs `tasknote` for a given task in a new `tmux` pane. Since I
     built Tasky for myself, this command requires you to be in a `tmux`
