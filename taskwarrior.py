@@ -20,6 +20,13 @@ class Task:
     def project(self):
         return self.data.get('project', '')
 
+    def tags(self):
+        return [ t.encode('utf-8') for t in self.data.get('tags', []) ]
+
+    def tags_string(self):
+        tags = [ "+" + t for t in self.tags() ]
+        return ", ".join(tags)
+
     def uuid(self):
         return self.data['uuid']
 

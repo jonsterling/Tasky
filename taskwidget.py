@@ -8,11 +8,13 @@ class TaskWidget (urwid.WidgetWrap):
         desc = urwid.Text(task.description())
         proj = urwid.Text(task.project() + ' ', align='right')
 
-        due = urwid.Text(task.due_date_string() + ' ', align='right')
+        due  = urwid.Text(task.due_date_string() + ' ', align='right')
+        tags = urwid.Text(task.tags_string() + ' ', align='right')
 
         item = urwid.AttrMap(urwid.Columns([
             ('fixed', 11, urwid.AttrWrap(proj, 'proj', 'proj_focus')),
             desc,
+            tags,
             ('fixed', 11, due)
         ]), 'body', 'body_focus')
 
