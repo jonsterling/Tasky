@@ -66,7 +66,7 @@ class TaskWarrior:
             'status:pending', args])
 
         task_json = '[%s]' % raw_output
-        return [Task(task) for task in json.loads(task_json, strict=False)]
+        return [Task(task) for task in json.loads(task_json, strict=False)[0]]
 
     def complete(self, task):
         Utility.run_command('task %s done' % task.uuid())
