@@ -5,7 +5,10 @@ class ScrollingListBox(urwid.ListBox):
     def scroll_down(self):
         focus = self.get_focus()[1]
         if focus is not None:
-            self.set_focus(self.get_focus()[1] + 1)
+            try:
+                self.set_focus(focus + 1)
+            except:
+                return
 
     def scroll_up(self):
         focus = self.get_focus()[1]
